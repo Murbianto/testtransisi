@@ -39,16 +39,25 @@ class HomeController extends Controller
       
         $nama = $request->input('nama');
         $email = $request->input('email');
-        $logo = $request->input('logo');
+        $logo = $request->file('image');
         $website = $request->input('website');
-        
+       // dd($logo);
+       $imageName = time().'.'.$request->image->extension();
+
         $companies = new Companies();
         $companies->name = $nama;
         $companies->email = $email;
-        $companies->logo = $logo;
+        $companies->logo = $imageName;
         $companies->website = $website;
 
         $success = $companies->save();
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+  
+          
+   
+        $request->image->move(public_path('images'), $imageName);
   
         return Redirect::route('home');
        // return view('createcompany');
@@ -71,13 +80,19 @@ class HomeController extends Controller
         $id = $request->input('companiesid');
         $name = $request->input('nama');
         $email = $request->input('email');
-        $logo = $request->input('logo');
+        $logo = $request->file('image');
         $website = $request->input('website');
+        $imageName = time().'.'.$request->image->extension();
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
+        $request->image->move(public_path('images'), $imageName);
 
         Companies::where('companies_id', $id)->update([
         'name' => $name,
         'email' => $email,
-        'logo' => $logo,
+        'logo' => $imageName,
         'website' => $website
       ]);
 

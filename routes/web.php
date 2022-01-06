@@ -30,3 +30,6 @@ Route::post('/createemployees', 'EmployeesController@createemployees');
 Route::get('/deleteemployees/{id}', 'EmployeesController@deleteemployees');
 Route::get('/editemployees/{id}', 'EmployeesController@editemployees');
 Route::post('/updateemployees', 'EmployeesController@updateemployees');
+Route::get('/exportpdf/{id}', 'EmployeesController@exportpdf');
+Route::post('/importexcel', 'AllEmployees@importexcel');
+Route::get('/allemployees', 'AllEmployees@index');

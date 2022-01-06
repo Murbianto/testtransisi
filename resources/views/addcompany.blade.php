@@ -14,7 +14,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-        <form action="{{url('createcompany')}}" method="post">
+        <form action="{{url('createcompany')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
             <div class="form-group">
                 <label>Nama</label>
@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <label>Logo</label>
-                <input type="text" name="logo" class="form-control" placeholder="Logo">
+                <input type="file" name="image" class="form-control">
                 
             </div>
 

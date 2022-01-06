@@ -8,12 +8,22 @@
            
                 <div class="card-header">Data Company</div>
                 <div class="row">
-                  &nbsp;&nbsp;&nbsp;
+                    <div class="col-2">
                        <a href="{{url('addemployees')}}"> <button type="button" class="btn btn-primary">Add Data</button></a>
-                       &nbsp;
-                       <a href="{{url('exportpdf/'.$companyid)}}"> <button type="button"  class="btn btn-primary" >Export PDF</button></a>
-                       &nbsp;
+                    </div>
+                    
+                    <div class="col-4">
+                    <form action="{{ url('importexcel') }}" method="post" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <input type="file" name="file" class="form-control">
+                    </div>
+                    <div class="col-2">
+                    
                       
+                            <button class="btn btn-success">Import Data</button>
+                     
+                    </form>
+                    </div>
                     
                 </div>
                 <div class="card-body">
@@ -23,7 +33,8 @@
                         </div>
                     @endif
 
-                    <table class="table">
+
+<table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>

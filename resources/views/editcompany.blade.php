@@ -14,7 +14,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-        <form action="{{url('updatecompany')}}" method="post">
+        <form action="{{url('updatecompany')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="companiesid" value = "{{$company->companies_id}}">
             <div class="form-group">
@@ -29,7 +29,8 @@
 
             <div class="form-group">
                 <label>Logo</label>
-                <input type="text" name="logo" class="form-control"  value = "{{$company->logo}}" placeholder="Logo">
+               
+                <input type="file" name="image" class="form-control">
                 
             </div>
 

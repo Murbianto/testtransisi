@@ -6,6 +6,7 @@ use App\Companies;
 use App\Employees;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use PDF;
 
 class EmployeesController extends Controller
 {
@@ -16,7 +17,8 @@ class EmployeesController extends Controller
         $getEmployees = Employees::where('employees.companies_id',$id)
                         ->join('companies as c','c.companies_id','=','employees.companies_id')
                         ->paginate(5);
-     
+        
+        $data['companyid'] = $id;
         $data['employees'] = $getEmployees;
         return view('listemployees',$data);
     }
@@ -49,7 +51,7 @@ class EmployeesController extends Controller
         return back();
     }
     public function editemployees($id){
-
+      
         $employees = Employees::find($id);
     
     	$data['employees'] = $employees;
@@ -69,6 +71,21 @@ class EmployeesController extends Controller
 
     
       return Redirect::route('employees', array('id' => $id));
+    }
+    public function exportpdf($id){
+
+        $getEmployees = Employees::where('employees.companies_id',$id)
+        ->join('companies as c','c.companies_id','=','employees.companies_id')
+        ->get();
+        $getcompanyname = Companies::where('companies_id',$id)->first();
+     
+        $data = ['title' => 'Data Karyawan PT '.$getcompanyname->name,
+                 'employee' =>$getEmployees,
+                ];
+
+        $pdf = PDF::loadView('exportpdf', $data);
+  
+        return $pdf->download('Data Karyawan PT'.$getcompanyname->name.'.pdf');
     }
     
 }
